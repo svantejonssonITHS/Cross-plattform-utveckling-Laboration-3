@@ -2,6 +2,7 @@
 import { Alert, BackHandler } from 'react-native';
 import { useState, useEffect } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Internal dependencies
 import Router from './Router';
