@@ -1,6 +1,10 @@
-import { StyleSheet, BackHandler, Alert, Text, View } from 'react-native';
+// External dependencies
+import { Alert, BackHandler } from 'react-native';
 import { useState, useEffect } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
+
+// Internal dependencies
+import Router from './Router';
 
 export default function App() {
 	const [isReady, setIsReady] = useState(false);
@@ -23,22 +27,6 @@ export default function App() {
 		})();
 	}, []);
 
-	if (!isReady) {
-		return null;
-	}
-
-	return (
-		<View style={styles.container}>
-			<Text>Hello World!</Text>
-		</View>
-	);
+	if (!isReady) return null;
+	else return <Router />;
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center'
-	}
-});
