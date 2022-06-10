@@ -1,11 +1,11 @@
 // Dependencies
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { useState, useEffect } from 'react';
+import { Card, Title, Paragraph } from 'react-native-paper';
 import dayjs from 'dayjs';
 
-export default function WorldClock(startTime: Date) {
-	const [date, setDate] = useState(startTime);
-
+export default function WorldClock(props: { startTime: Date; offset: string; city: string }) {
+	const [date, setDate] = useState(props.startTime);
 	useEffect(() => {
 		// set interval to update time
 		const updateInterval = setInterval(() => setDate(new Date()), 1000);
@@ -15,8 +15,14 @@ export default function WorldClock(startTime: Date) {
 	}, [date]);
 
 	return (
-		<View>
-			<Text>{dayjs(date).format('HH:mm')}</Text>
-		</View>
+		<Card>
+			<Card.Content style={{ flexDirection: 'row', alignContent: 'center' }}>
+				<View style={{ flex: 1 }}>
+					<Paragraph>{props.offset + ' GMT'}</Paragraph>
+					<Title>{props.city}</Title>
+				</View>
+				<Title style={{ alignSelf: 'center' }}>{dayjs(date).format('HH:mm')}</Title>
+			</Card.Content>
+		</Card>
 	);
 }
