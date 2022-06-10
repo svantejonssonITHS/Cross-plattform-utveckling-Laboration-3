@@ -54,7 +54,7 @@ export default function WorldClocks() {
 								onPress={() => setModalVisible(false)}
 							/>
 						</View>
-						<ScrollView>
+						<ScrollView style={{ width: '100%' }}>
 							{allTimezones.map((item: string) => (
 								<View key={item}>
 									{item.toLowerCase().includes(search.toLowerCase()) && (
