@@ -20,8 +20,8 @@ export default function Router() {
 					tabBarActiveTintColor: '#ff7d2d',
 					tabBarInactiveTintColor: '#fff',
 					tabBarIcon: ({ focused }) => {
-						let name;
-						let color;
+						let name: string;
+						let color: string;
 
 						if (route.name === 'World clocks') name = 'language';
 						else name = 'warning';
