@@ -1,4 +1,4 @@
-async function request(request: string): Promise<unknown> {
+async function request(request: string): Promise<string[]> {
 	const response = await fetch(request);
 	return await response.json();
 }

@@ -13,7 +13,7 @@ export default function App() {
 		<View style={{ backgroundColor: '#e6f3ff', height: '100%' }}>
 			<Appbar.Header style={{ backgroundColor: '#0073e6' }}>
 				<Appbar.Action icon="clock-edit-outline" />
-				<Appbar.Content title="World clocks" />
+				<Appbar.Content title="World clocks" titleStyle={{ alignSelf: 'center' }} />
 				<Appbar.Action icon="plus" />
 			</Appbar.Header>
 		</View>
