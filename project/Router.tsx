@@ -11,7 +11,7 @@ export default function Router() {
 	return (
 		<NavigationContainer>
 			<Tab.Navigator
-				initialRouteName="WorldClocks"
+				initialRouteName="World clocks"
 				screenOptions={({ route }) => ({
 					headerShown: false,
 					tabBarStyle: {
