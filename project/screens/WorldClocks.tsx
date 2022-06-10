@@ -1,10 +1,11 @@
 // External dependencies
-import { View, Button, Modal, ScrollView, TextInput } from 'react-native';
 import { useContext, useState } from 'react';
+import { Alert, BackHandler, View, Button, Modal, FlatList, TextInput } from 'react-native';
 import { Appbar } from 'react-native-paper';
 
 // Internal dependencies
 import { TimeContext } from '../contexts/Time';
+import { getDetailedTimezone } from '../misc';
 
 export default function WorldClocks() {
 	const { allTimezones, selectedTimezones } = useContext(TimeContext);
@@ -54,20 +55,25 @@ export default function WorldClocks() {
 								onPress={() => setModalVisible(false)}
 							/>
 						</View>
-						<ScrollView style={{ width: '100%' }}>
-							{allTimezones.map((item: string) => (
+						<FlatList
+							style={{ width: '100%' }}
+							data={allTimezones}
+							renderItem={({ item }) => (
 								<View key={item}>
-									{item.toLowerCase().includes(search.toLowerCase()) && (
+									{item.replace(/_/g, ' ').toLowerCase().includes(search.toLowerCase()) && (
 										<Button
-											title={item}
+											title={item.replace(/_/g, ' ')}
 											accessibilityLabel="Go back"
 											color="#ff7d2d"
-											onPress={() => setModalVisible(false)}
+											onPress={async () => {
+												createNewClock(await getDetailedTimezone(item));
+												setModalVisible(false);
+											}}
 										/>
 									)}
 								</View>
-							))}
-						</ScrollView>
+							)}
+						/>
 					</View>
 				</Modal>
 			</Appbar.Header>
