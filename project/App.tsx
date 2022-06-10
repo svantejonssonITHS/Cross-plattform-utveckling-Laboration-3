@@ -22,10 +22,11 @@ export default function App() {
 				setAllTimezones(await getTimezones());
 
 				// Get selected timezones from async storage.
-				const selectedTimezones = await AsyncStorage.getItem('selectedTimezones');
-				if (selectedTimezones) {
-					JSON.parse(selectedTimezones).forEach(async (timezone: string) => {
-						const detailedTimezone = await getDetailedTimezone(timezone);
+				const storedTimezones = await AsyncStorage.getItem('selectedTimezones');
+
+				if (storedTimezones) {
+					await JSON.parse(storedTimezones).forEach(async (timezone: string) => {
+						const detailedTimezone = await getDetailedTimezone(timezone.timezone);
 						if (detailedTimezone) {
 							setSelectedTimezones((timezones) => [...timezones, detailedTimezone]);
 						}
