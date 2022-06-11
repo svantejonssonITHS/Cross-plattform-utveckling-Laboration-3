@@ -54,3 +54,7 @@ export function getOffset(offset: string) {
 	if (offset.split(/(\+|-)/g)[1] === '-') return parsedOffset * -1;
 	return parsedOffset;
 }
+
+export function stringMatch(string: string, otherString: string) {
+	return string.toLowerCase().replace(/_/g, ' ').includes(otherString.toLowerCase().replace(/_/g, ' '));
+}
