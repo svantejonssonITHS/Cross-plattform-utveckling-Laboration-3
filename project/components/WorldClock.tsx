@@ -4,14 +4,14 @@ import { useState, useEffect } from 'react';
 import { Card, Title, Paragraph } from 'react-native-paper';
 
 // Internal dependencies
-import { getTime, getOffset } from '../misc';
+import { getTime } from '../misc';
 
-export default function WorldClock(props: { startTime: string; offset: string; city: string }) {
+export default function WorldClock(props: { startTime: string; timezone: string; offset: number; city: string }) {
 	const [time, setTime] = useState(props.startTime);
 
 	useEffect(() => {
 		// set interval to update time
-		const updateInterval = setInterval(() => setTime(getTime(getOffset(props.offset) as number) as string), 1000);
+		const updateInterval = setInterval(() => setTime(getTime(props.offset) as string), 1000);
 
 		// clear interval on unmount
 		return () => clearInterval(updateInterval);
@@ -21,7 +21,7 @@ export default function WorldClock(props: { startTime: string; offset: string; c
 		<Card>
 			<Card.Content style={{ flexDirection: 'row', alignContent: 'center' }}>
 				<View style={{ flex: 1 }}>
-					<Paragraph>{props.offset + ' GMT'}</Paragraph>
+					<Paragraph>{props.timezone}</Paragraph>
 					<Title>{props.city}</Title>
 				</View>
 				<Title style={{ alignSelf: 'center' }}>{time}</Title>

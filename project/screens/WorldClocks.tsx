@@ -6,26 +6,28 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Internal dependencies
 import { TimeContext } from '../contexts/Time';
-import { getDetailedTimezone, getTime, getOffset } from '../misc';
+import { getDetailedTimezone, getTime, stringMatch } from '../misc';
+import { IClock, ITimezone } from '../interfaces/';
 import WorldClock from '../components/WorldClock';
 
 export default function WorldClocks() {
-	const { allTimezones, selectedTimezones } = useContext(TimeContext);
-	const [clocks, setClocks] = useState<object[]>([]);
+	const { allTimezones, savedTimezones } = useContext(TimeContext);
+	const [clocks, setClocks] = useState<IClock[]>([]);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [search, setSearch] = useState('');
 
 	useEffect(() => {
 		(async () => {
 			try {
-				selectedTimezones.forEach((timezone: string[]) => {
-					const clock = {
-						startTime: getTime(getOffset(timezone.utc_offset) as number),
-						offset: timezone.utc_offset,
-						city: timezone.timezone
+				savedTimezones.forEach((timezone: ITimezone) => {
+					const clock: IClock = {
+						time: getTime(timezone.offset) as string,
+						timezone: timezone.offset_str,
+						offset: timezone.offset,
+						city: timezone.city
 					};
 
-					setClocks((clocks: object) => [...clocks, clock]);
+					setClocks((clocks: IClock[]) => [...clocks, clock]);
 				});
 			} catch (e) {
 				// An error occurred, notify user
@@ -34,7 +36,7 @@ export default function WorldClocks() {
 				]);
 			}
 		})();
-	}, [selectedTimezones]);
+	}, [savedTimezones]);
 
 	return (
 		<View style={{ backgroundColor: '#e6f3ff', height: '100%' }}>
@@ -44,14 +46,15 @@ export default function WorldClocks() {
 				<Appbar.Action icon="plus" onPress={() => setModalVisible(true)} />
 			</Appbar.Header>
 			<ScrollView>
-				{selectedTimezones &&
+				{savedTimezones &&
 					clocks.length > 0 &&
-					clocks.map((clock: object, index: number) => (
+					clocks.map((clock: IClock, index: number) => (
 						<WorldClock
 							key={index}
-							startTime={clock.startTime}
+							startTime={clock.time}
+							timezone={clock.timezone}
 							offset={clock.offset}
-							city={clock.city.split(/\//g)[clock.city.split(/\//g).length - 1]}
+							city={clock.city}
 						/>
 					))}
 			</ScrollView>
@@ -94,34 +97,41 @@ export default function WorldClocks() {
 					</View>
 					<FlatList
 						style={{ width: '100%' }}
-						data={allTimezones}
+						data={allTimezones.map((timezone: string) => timezone.replace(/_/g, ' '))}
 						renderItem={({ item }) => (
 							<View key={item}>
-								{item.toLowerCase().includes(search.toLowerCase()) && (
+								{stringMatch(item, search) && (
 									<Button
 										title={item}
 										accessibilityLabel="Go back"
 										color="#ff7d2d"
 										onPress={async () => {
-											const timezone = await getDetailedTimezone(item);
-											timezone.timezone = item;
-											const clock = {
-												startTime: getTime(getOffset(timezone.utc_offset) as number),
-												offset: timezone.utc_offset,
-												city: item
+											// Get detailed timezone info
+											const timezone: ITimezone = await getDetailedTimezone(item);
+
+											// Create clock object
+											const clock: IClock = {
+												time: getTime(timezone.offset) as string,
+												timezone: timezone.offset_str,
+												offset: timezone.offset,
+												city: timezone.city
 											};
-											setClocks((clocks: object) => [...clocks, clock]);
+
+											// Add clock to state
+											setClocks((clocks: IClock[]) => [...clocks, clock]);
 
 											// Get selected timezones from AsyncStorage
-											const timezonesInStorage =
-												(await AsyncStorage.getItem('selectedTimezones')) || '[]';
+											const storedTimezones = JSON.parse(
+												(await AsyncStorage.getItem('savedTimezones')) || '[]'
+											);
 
-											if (timezonesInStorage) {
-												const timezones = JSON.parse(timezonesInStorage);
-												timezones.push(timezone);
-												AsyncStorage.setItem('selectedTimezones', JSON.stringify(timezones));
+											// Add selected timezone to AsyncStorage
+											if (storedTimezones) {
+												storedTimezones.push(timezone);
+												AsyncStorage.setItem('savedTimezones', JSON.stringify(storedTimezones));
 											}
 
+											// Close modal and clear search
 											setModalVisible(false);
 											setSearch('');
 										}}

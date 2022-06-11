@@ -6,13 +6,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Internal dependencies
 import Router from './Router';
-import { getTimezones, getDetailedTimezone } from './misc';
+import { getTimezones } from './misc';
 import { TimeContext } from './contexts/Time';
+import { ITimezone } from './interfaces/';
 
 export default function App() {
 	const [isReady, setIsReady] = useState(false);
 	const [allTimezones, setAllTimezones] = useState<string[]>([]);
-	const [selectedTimezones, setSelectedTimezones] = useState<string[]>([]);
+	const [savedTimezones, setSavedTimezones] = useState<ITimezone[]>([]);
 
 	useEffect(() => {
 		(async () => {
@@ -22,16 +23,9 @@ export default function App() {
 				setAllTimezones(await getTimezones());
 
 				// Get selected timezones from async storage.
-				const storedTimezones = await AsyncStorage.getItem('selectedTimezones');
+				const storedTimezones = await AsyncStorage.getItem('savedTimezones');
 
-				if (storedTimezones) {
-					await JSON.parse(storedTimezones).forEach(async (timezone: string) => {
-						const detailedTimezone = await getDetailedTimezone(timezone.timezone);
-						if (detailedTimezone) {
-							setSelectedTimezones((timezones) => [...timezones, detailedTimezone]);
-						}
-					});
-				}
+				if (storedTimezones) setSavedTimezones(JSON.parse(storedTimezones));
 			} catch (e) {
 				// An error occurred, notify user
 				Alert.alert('Something went wrong', 'Please try again later', [
@@ -48,7 +42,7 @@ export default function App() {
 	if (!isReady) return null;
 	else
 		return (
-			<TimeContext.Provider value={{ allTimezones, selectedTimezones }}>
+			<TimeContext.Provider value={{ allTimezones, savedTimezones }}>
 				<Router />
 			</TimeContext.Provider>
 		);
