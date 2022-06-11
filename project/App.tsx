@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Internal dependencies
 import Router from './Router';
 import { getTimezones } from './misc';
-import { TimeContext } from './contexts/Time';
+import { TimeContext } from './contexts/';
 import { ITimezone } from './interfaces/';
 
 export default function App() {

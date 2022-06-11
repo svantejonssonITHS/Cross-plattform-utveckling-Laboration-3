@@ -5,7 +5,7 @@ import { Appbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Internal dependencies
-import { TimeContext } from '../contexts/Time';
+import { TimeContext } from '../contexts/';
 import { getDetailedTimezone, getTime, stringMatch } from '../misc';
 import { IClock, ITimezone } from '../interfaces/';
 import WorldClock from '../components/WorldClock';
