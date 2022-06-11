@@ -29,12 +29,11 @@ export default function Router() {
 						if (focused) color = '#ff7d2d';
 						else color = '#fff';
 
-						return <MaterialIcons name={name} size={24} color={color} />;
+						return <MaterialIcons name={name as never} size={24} color={color} />;
 					}
 				})}
 			>
 				<Tab.Screen name="World clocks" component={WorldClocks} />
-				<Tab.Screen name="Test" component={WorldClocks} />
 			</Tab.Navigator>
 		</NavigationContainer>
 	);
