@@ -1,3 +1,6 @@
+// Dependencies
+import { ITimezone } from '../interfaces/';
+
 export async function getTimezones() {
 	const request = await fetch('http://worldtimeapi.org/api/timezone');
 	let timezones = await request.json();
@@ -6,18 +9,29 @@ export async function getTimezones() {
 	timezones = timezones.filter((timezone: string) => timezone.includes('/') && !timezone.includes('Etc'));
 
 	// Replace any underscores with spaces and return the timezones
-	return timezones.map((timezone: string) => timezone.replace(/_/g, ' '));
+	return timezones.map((timezone: string) => timezone);
 }
 
 export async function getDetailedTimezone(timezone: string) {
-	const request = await fetch(`http://worldtimeapi.org/api/timezone/${timezone.replace(/ /g, '_')}`);
+	const request = await fetch(`http://worldtimeapi.org/api/timezone/${timezone}`);
 	const detailedTimezone = await request.json();
-	detailedTimezone.timezone = detailedTimezone.timezone.replace(/_/g, ' ');
-	return detailedTimezone;
+
+	// Create an object with the timezone interface
+	const timezoneObject: ITimezone = {
+		name_api: detailedTimezone.timezone,
+		name_human: detailedTimezone.timezone.replace(/_/g, ' '),
+		city: detailedTimezone.timezone
+			.split(/\//g)
+			[detailedTimezone.timezone.split(/\//g).length - 1].replace(/_/g, ' '),
+		offset: getOffset(detailedTimezone.utc_offset),
+		offset_str: detailedTimezone.utc_offset + ' GMT'
+	};
+
+	return timezoneObject;
 }
 
 export function getTime(offset: number) {
-	if (!offset) return null;
+	if (!offset) return '00:00';
 
 	// Clock offset to Greenwich Mean Time in hours
 	const gmtOffset = 3600000 * offset;
@@ -32,7 +46,7 @@ export function getTime(offset: number) {
 }
 
 export function getOffset(offset: string) {
-	if (!offset) return null;
+	if (!offset) return 0;
 
 	const preparedOffset = offset.split(/(\+|-)/g)[2].split(':');
 	const parsedOffset = parseInt(preparedOffset[0]) + parseInt(preparedOffset[1]) / 60;
