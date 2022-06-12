@@ -1,4 +1,7 @@
-// Dependencies
+// External dependencies
+import { StyleSheet } from 'react-native';
+
+// Internal ependencies
 import { ITimezone } from '../interfaces/';
 
 export async function getTimezones() {
@@ -57,4 +60,66 @@ export function getOffset(offset: string) {
 
 export function stringMatch(string: string, otherString: string) {
 	return string.toLowerCase().replace(/_/g, ' ').includes(otherString.toLowerCase().replace(/_/g, ' '));
+}
+
+export function getStyles(theme: 'light' | 'dark') {
+	/* NOTE
+	Footer styling is set in Router.tsx 
+	Any button styling should be set in the component that uses it
+	*/
+
+	const bgPrimary = theme === 'light' ? '#0073e6' : '#fff';
+	const bgSecondary = theme === 'light' ? '#e6f3ff' : '#000';
+	const textPrimary = theme === 'light' ? '#fff' : '#000';
+	const textSecondary = theme === 'light' ? '#ff7d2d' : '#fff';
+
+	return StyleSheet.create({
+		body: {
+			color: textPrimary,
+			backgroundColor: bgSecondary,
+			height: '100%'
+		},
+		header: {
+			color: textPrimary,
+			backgroundColor: bgPrimary
+		},
+		headerTitle: {
+			alignSelf: 'center'
+		},
+		modal: {
+			backgroundColor: bgSecondary,
+			height: '95%',
+			width: '100%',
+			alignItems: 'center',
+			position: 'absolute',
+			bottom: 0,
+			borderTopStartRadius: 10,
+			borderTopEndRadius: 10
+		},
+		searchContainer: {
+			width: '100%',
+			padding: 10,
+			flexDirection: 'row'
+		},
+		searchInput: {
+			backgroundColor: '#b5dbff',
+			padding: 5,
+			borderRadius: 10,
+			flex: 1,
+			marginRight: 10
+		},
+		scrollContainer: {
+			width: '100%'
+		},
+		clockContainer: {
+			flexDirection: 'row',
+			alignContent: 'center'
+		},
+		clockInfo: {
+			flex: 1
+		},
+		clockTime: {
+			alignSelf: 'center'
+		}
+	});
 }

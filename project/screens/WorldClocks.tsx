@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Internal dependencies
 import { TimeContext } from '../contexts/';
-import { getDetailedTimezone, getTime, stringMatch } from '../misc';
+import { getDetailedTimezone, getTime, stringMatch, getStyles } from '../misc';
 import { IClock, ITimezone } from '../interfaces/';
 import WorldClock from '../components/WorldClock';
 
@@ -15,6 +15,7 @@ export default function WorldClocks() {
 	const [clocks, setClocks] = useState<IClock[]>([]);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [search, setSearch] = useState('');
+	const [styles] = useState(getStyles('light'));
 
 	useEffect(() => {
 		(async () => {
@@ -39,13 +40,13 @@ export default function WorldClocks() {
 	}, [savedTimezones]);
 
 	return (
-		<View style={{ backgroundColor: '#e6f3ff', height: '100%' }}>
-			<Appbar.Header style={{ backgroundColor: '#0073e6' }}>
+		<View style={styles.body}>
+			<Appbar.Header style={styles.header}>
 				<Appbar.Action icon="clock-edit-outline" />
-				<Appbar.Content title="World clocks" titleStyle={{ alignSelf: 'center' }} />
+				<Appbar.Content title="World clocks" titleStyle={styles.headerTitle} />
 				<Appbar.Action icon="plus" onPress={() => setModalVisible(true)} />
 			</Appbar.Header>
-			<ScrollView>
+			<ScrollView style={styles.scrollContainer}>
 				{savedTimezones &&
 					clocks.length > 0 &&
 					clocks.map((clock: IClock, index: number) => (
@@ -59,19 +60,8 @@ export default function WorldClocks() {
 					))}
 			</ScrollView>
 			<Modal animationType="slide" visible={modalVisible} transparent={true}>
-				<View
-					style={{
-						backgroundColor: '#e6f3ff',
-						height: '95%',
-						width: '100%',
-						alignItems: 'center',
-						position: 'absolute',
-						bottom: 0,
-						borderTopStartRadius: 10,
-						borderTopEndRadius: 10
-					}}
-				>
-					<View style={{ width: '100%', padding: 10, flexDirection: 'row' }}>
+				<View style={styles.modal}>
+					<View style={styles.searchContainer}>
 						<TextInput
 							onChangeText={setSearch}
 							value={search}
@@ -80,13 +70,7 @@ export default function WorldClocks() {
 							autoCorrect={false}
 							autoComplete={'off'}
 							returnKeyType={'search'}
-							style={{
-								backgroundColor: '#b5dbff',
-								padding: 5,
-								borderRadius: 10,
-								flex: 1,
-								marginRight: 10
-							}}
+							style={styles.searchInput}
 						/>
 						<Button
 							title="Cancel"
@@ -96,7 +80,7 @@ export default function WorldClocks() {
 						/>
 					</View>
 					<FlatList
-						style={{ width: '100%' }}
+						style={styles.scrollContainer}
 						data={allTimezones.map((timezone: string) => timezone.replace(/_/g, ' '))}
 						renderItem={({ item }) => (
 							<View key={item}>

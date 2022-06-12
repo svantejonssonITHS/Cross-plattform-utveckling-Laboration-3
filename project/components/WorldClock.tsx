@@ -4,10 +4,11 @@ import { useState, useEffect } from 'react';
 import { Card, Title, Paragraph } from 'react-native-paper';
 
 // Internal dependencies
-import { getTime } from '../misc';
+import { getTime, getStyles } from '../misc';
 
 export default function WorldClock(props: { startTime: string; timezone: string; offset: number; city: string }) {
 	const [time, setTime] = useState(props.startTime);
+	const [styles] = useState(getStyles('light'));
 
 	useEffect(() => {
 		// set interval to update time
@@ -19,12 +20,12 @@ export default function WorldClock(props: { startTime: string; timezone: string;
 
 	return (
 		<Card>
-			<Card.Content style={{ flexDirection: 'row', alignContent: 'center' }}>
-				<View style={{ flex: 1 }}>
+			<Card.Content style={styles.clockContainer}>
+				<View style={styles.clockInfo}>
 					<Paragraph>{props.timezone}</Paragraph>
 					<Title>{props.city}</Title>
 				</View>
-				<Title style={{ alignSelf: 'center' }}>{time}</Title>
+				<Title style={styles.clockTime}>{time}</Title>
 			</Card.Content>
 		</Card>
 	);
