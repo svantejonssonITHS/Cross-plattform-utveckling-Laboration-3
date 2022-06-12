@@ -70,10 +70,18 @@ export function getStyles(theme: 'light' | 'dark') {
 
 	const bgPrimary = theme === 'light' ? '#0073e6' : '#fff';
 	const bgSecondary = theme === 'light' ? '#e6f3ff' : '#000';
+	const bgTertiary = theme === 'light' ? '#fff' : '#000';
 	const textPrimary = theme === 'light' ? '#fff' : '#000';
 	const textSecondary = theme === 'light' ? '#ff7d2d' : '#fff';
+	const textTertiary = theme === 'light' ? '#000' : '#fff';
 
 	return StyleSheet.create({
+		background: {
+			backgroundColor: bgTertiary
+		},
+		text: {
+			color: textTertiary
+		},
 		body: {
 			color: textPrimary,
 			backgroundColor: bgSecondary,
@@ -119,7 +127,8 @@ export function getStyles(theme: 'light' | 'dark') {
 			flex: 1
 		},
 		clockTime: {
-			alignSelf: 'center'
+			alignSelf: 'center',
+			color: textTertiary
 		}
 	});
 }

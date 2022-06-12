@@ -19,11 +19,11 @@ export default function WorldClock(props: { startTime: string; timezone: string;
 	}, [time]);
 
 	return (
-		<Card>
+		<Card style={styles.background}>
 			<Card.Content style={styles.clockContainer}>
 				<View style={styles.clockInfo}>
-					<Paragraph>{props.timezone}</Paragraph>
-					<Title>{props.city}</Title>
+					<Paragraph style={styles.text}>{props.timezone}</Paragraph>
+					<Title style={styles.text}>{props.city}</Title>
 				</View>
 				<Title style={styles.clockTime}>{time}</Title>
 			</Card.Content>
