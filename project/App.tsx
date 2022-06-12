@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Internal dependencies
 import Router from './Router';
 import { getTimezones } from './misc';
-import { TimeContext } from './contexts/';
+import { ThemeContext, TimeContext } from './contexts/';
 import { ITimezone } from './interfaces/';
 
 export default function App() {
@@ -42,8 +42,10 @@ export default function App() {
 	if (!isReady) return null;
 	else
 		return (
-			<TimeContext.Provider value={{ allTimezones, savedTimezones }}>
-				<Router />
-			</TimeContext.Provider>
+			<ThemeContext.Provider value={{ theme: 'light' }}>
+				<TimeContext.Provider value={{ allTimezones, savedTimezones }}>
+					<Router />
+				</TimeContext.Provider>
+			</ThemeContext.Provider>
 		);
 }

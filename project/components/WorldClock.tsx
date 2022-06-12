@@ -1,22 +1,26 @@
 // External dependencies
 import { View } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Card, Title, Paragraph } from 'react-native-paper';
 
 // Internal dependencies
 import { getTime, getStyles } from '../misc';
+import { ThemeContext } from '../contexts';
 
 export default function WorldClock(props: { startTime: string; timezone: string; offset: number; city: string }) {
 	const [time, setTime] = useState(props.startTime);
-	const [styles] = useState(getStyles('light'));
+	const [theme] = useState(useContext(ThemeContext).theme);
+	const [styles, setStyles] = useState(getStyles(useContext(ThemeContext).theme));
 
 	useEffect(() => {
+		setStyles(getStyles(theme));
+
 		// set interval to update time
 		const updateInterval = setInterval(() => setTime(getTime(props.offset) as string), 1000);
 
 		// clear interval on unmount
 		return () => clearInterval(updateInterval);
-	}, [time]);
+	}, [time, theme]);
 
 	return (
 		<Card style={styles.background}>

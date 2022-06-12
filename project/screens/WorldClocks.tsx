@@ -16,7 +16,7 @@ import { Appbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Internal dependencies
-import { TimeContext } from '../contexts/';
+import { ThemeContext, TimeContext } from '../contexts/';
 import { getDetailedTimezone, getTime, stringMatch, getStyles } from '../misc';
 import { IClock, ITimezone } from '../interfaces/';
 import WorldClock from '../components/WorldClock';
@@ -26,21 +26,23 @@ export default function WorldClocks() {
 	const [clocks, setClocks] = useState<IClock[]>([]);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [search, setSearch] = useState('');
-	const [styles] = useState(getStyles('light'));
+	const [theme] = useState(useContext(ThemeContext).theme);
+	const [styles, setStyles] = useState(getStyles(useContext(ThemeContext).theme));
 
 	useEffect(() => {
+		setStyles(getStyles(theme));
 		(async () => {
 			try {
-				savedTimezones.forEach((timezone: ITimezone) => {
-					const clock: IClock = {
-						time: getTime(timezone.offset) as string,
-						timezone: timezone.offset_str,
-						offset: timezone.offset,
-						city: timezone.city
-					};
-
-					setClocks((clocks: IClock[]) => [...clocks, clock]);
-				});
+				setClocks(
+					savedTimezones.map((timezone: ITimezone) => {
+						return {
+							time: getTime(timezone.offset) as string,
+							timezone: timezone.offset_str,
+							offset: timezone.offset,
+							city: timezone.city
+						} as IClock;
+					})
+				);
 			} catch (e) {
 				// An error occurred, notify user
 				Alert.alert('Something went wrong', 'Please try again later', [
@@ -48,7 +50,7 @@ export default function WorldClocks() {
 				]);
 			}
 		})();
-	}, [savedTimezones]);
+	}, [savedTimezones, theme]);
 
 	return (
 		<View style={styles.body}>
