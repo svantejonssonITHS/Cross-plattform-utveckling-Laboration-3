@@ -1,5 +1,16 @@
 // External dependencies
-import { Alert, BackHandler, View, Button, Modal, FlatList, TextInput, ScrollView } from 'react-native';
+import {
+	Alert,
+	BackHandler,
+	View,
+	Button,
+	Modal,
+	FlatList,
+	TextInput,
+	ScrollView,
+	InputAccessoryView,
+	Platform
+} from 'react-native';
 import { useContext, useState, useEffect } from 'react';
 import { Appbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -71,13 +82,24 @@ export default function WorldClocks() {
 							autoComplete={'off'}
 							returnKeyType={'search'}
 							style={styles.searchInput}
+							inputAccessoryViewID="search"
 						/>
 						<Button
 							title="Cancel"
 							accessibilityLabel="Go back"
 							color="#ff7d2d"
-							onPress={() => setModalVisible(false)}
+							onPress={() => {
+								setSearch('');
+								setModalVisible(false);
+							}}
 						/>
+						{Platform.OS === 'ios' && (
+							<InputAccessoryView nativeID="search">
+								<View style={styles.background}>
+									<Button onPress={() => setSearch('')} title="Clear search" />
+								</View>
+							</InputAccessoryView>
+						)}
 					</View>
 					<FlatList
 						style={styles.scrollContainer}
