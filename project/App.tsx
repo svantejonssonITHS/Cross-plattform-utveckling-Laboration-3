@@ -14,6 +14,7 @@ export default function App() {
 	const [isReady, setIsReady] = useState(false);
 	const [allTimezones, setAllTimezones] = useState<string[]>([]);
 	const [savedTimezones, setSavedTimezones] = useState<ITimezone[]>([]);
+	const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
 	useEffect(() => {
 		(async () => {
@@ -26,6 +27,14 @@ export default function App() {
 				const storedTimezones = await AsyncStorage.getItem('savedTimezones');
 
 				if (storedTimezones) setSavedTimezones(JSON.parse(storedTimezones));
+
+				// Get saved theme preference from async storage.
+				const storedTheme = await AsyncStorage.getItem('theme');
+
+				if (storedTheme) setTheme(storedTheme as 'light' | 'dark');
+				else {
+					AsyncStorage.setItem('theme', 'light');
+				}
 			} catch (e) {
 				// An error occurred, notify user
 				Alert.alert('Something went wrong', 'Please try again later', [
@@ -42,7 +51,7 @@ export default function App() {
 	if (!isReady) return null;
 	else
 		return (
-			<ThemeContext.Provider value={{ theme: 'light' }}>
+			<ThemeContext.Provider value={{ theme }}>
 				<TimeContext.Provider value={{ allTimezones, savedTimezones }}>
 					<Router />
 				</TimeContext.Provider>

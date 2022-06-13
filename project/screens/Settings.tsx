@@ -7,6 +7,7 @@ import RadioButtonRN from 'radio-buttons-react-native';
 // Internal dependencies
 import { ThemeContext } from '../contexts/';
 import { getStyles } from '../misc';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Settings() {
 	const [theme, setTheme] = useState(useContext(ThemeContext).theme);
@@ -25,6 +26,7 @@ export default function Settings() {
 
 	useEffect(() => {
 		setStyles(getStyles(theme));
+		AsyncStorage.setItem('theme', theme);
 	}, [theme]);
 
 	return (
