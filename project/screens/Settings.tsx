@@ -1,5 +1,5 @@
 // External dependencies
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { useContext, useState, useEffect } from 'react';
 import { Appbar } from 'react-native-paper';
 import RadioButtonRN from 'radio-buttons-react-native';
@@ -35,12 +35,13 @@ export default function Settings() {
 				<Appbar.Content title="Settings" titleStyle={styles.headerTitle} />
 			</Appbar.Header>
 			<View style={styles.background}>
+				<Text style={styles.title}>Color preference</Text>
 				<RadioButtonRN
 					box={false}
 					duration={300}
-					activeColor={'#f00'}
-					deactiveColor={'#0f0'}
-					textColor={'#000'}
+					activeColor={styles.bgPrimary}
+					deactiveColor={styles.bgSecondary}
+					textColor={styles.textTertiary}
 					data={options}
 					initial={options.findIndex((option) => option.value === theme) + 1}
 					selectedBtn={(selected) => setTheme(selected.value as 'light' | 'dark')}

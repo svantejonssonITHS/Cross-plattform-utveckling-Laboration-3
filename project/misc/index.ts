@@ -1,7 +1,4 @@
-// External dependencies
-import { StyleSheet } from 'react-native';
-
-// Internal ependencies
+// Dependencies
 import { ITimezone } from '../interfaces/';
 
 export async function getTimezones() {
@@ -75,7 +72,13 @@ export function getStyles(theme: 'light' | 'dark') {
 	const textSecondary = theme === 'light' ? '#ff7d2d' : '#fff';
 	const textTertiary = theme === 'light' ? '#000' : '#fff';
 
-	return StyleSheet.create({
+	return {
+		bgPrimary,
+		bgSecondary,
+		bgTertiary,
+		textPrimary,
+		textSecondary,
+		textTertiary,
 		background: {
 			backgroundColor: bgTertiary
 		},
@@ -129,6 +132,12 @@ export function getStyles(theme: 'light' | 'dark') {
 		clockTime: {
 			alignSelf: 'center',
 			color: textTertiary
+		},
+		title: {
+			color: textTertiary,
+			fontSize: 30,
+			fontWeight: 'bold',
+			padding: 10
 		}
-	});
+	};
 }
