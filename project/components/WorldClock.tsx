@@ -1,6 +1,6 @@
 // External dependencies
 import { View } from 'react-native';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, Title, Paragraph } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 
@@ -24,13 +24,13 @@ export default function WorldClock(props: { startTime: string; timezone: string;
 	}, [time, theme]);
 
 	return (
-		<Card style={styles.background}>
-			<Card.Content style={styles.clockContainer}>
-				<View style={styles.clockInfo}>
-					<Paragraph style={styles.text}>{props.timezone}</Paragraph>
-					<Title style={styles.text}>{props.city}</Title>
+		<Card style={styles.card}>
+			<Card.Content style={styles.card.content}>
+				<View style={styles.card.content.info}>
+					<Paragraph style={{ color: styles.textMediumEmphasis }}>{props.timezone}</Paragraph>
+					<Title style={{ color: styles.textHighEmphasis }}>{props.city}</Title>
 				</View>
-				<Title style={styles.clockTime}>{time}</Title>
+				<Title style={styles.card.content.time}>{time}</Title>
 			</Card.Content>
 		</Card>
 	);

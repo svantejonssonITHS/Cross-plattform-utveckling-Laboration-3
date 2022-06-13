@@ -33,16 +33,17 @@ export default function Settings() {
 	return (
 		<View style={styles.body}>
 			<Appbar.Header style={styles.header}>
-				<Appbar.Content title="Settings" titleStyle={styles.headerTitle} />
+				<Appbar.Content title="Settings" titleStyle={styles.header.title} />
 			</Appbar.Header>
-			<View style={styles.background}>
-				<Text style={styles.title}>Color preference</Text>
+			<View style={styles.settings}>
+				<Text style={styles.settings.title}>Color preference</Text>
 				<RadioButtonRN
 					box={false}
 					duration={300}
-					activeColor={styles.bgPrimary}
-					deactiveColor={styles.bgSecondary}
-					textColor={styles.textTertiary}
+					activeColor={styles.settings.radio.activeColor}
+					deactiveColor={styles.settings.radio.inactiveColor}
+					textColor={styles.settings.radio.textColor}
+					circleSize={styles.settings.radio.circleSize}
 					data={options}
 					initial={options.findIndex((option) => option.value === theme) + 1}
 					selectedBtn={(selected) => store.dispatch(setTheme(selected.value))}

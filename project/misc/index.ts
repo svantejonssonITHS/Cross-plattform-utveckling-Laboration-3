@@ -60,45 +60,51 @@ export function stringMatch(string: string, otherString: string) {
 }
 
 export function getStyles(theme: 'light' | 'dark') {
-	/* NOTE
-	Footer styling is set in Router.tsx 
-	Any button styling should be set in the component that uses it
-	*/
-
-	const bgPrimary = theme === 'light' ? '#0073e6' : '#fff';
-	const bgSecondary = theme === 'light' ? '#e6f3ff' : '#000';
-	const bgTertiary = theme === 'light' ? '#fff' : '#000';
+	/*
+	const bgPrimary = theme === 'light' ? '#0073e6' : '#121212';
+	const bgSecondary = theme === 'light' ? '#e6f3ff' : '#121212';
+	const bgTertiary = theme === 'light' ? '#fff' : '#1e1e1e';
 	const textPrimary = theme === 'light' ? '#fff' : '#000';
 	const textSecondary = theme === 'light' ? '#ff7d2d' : '#fff';
 	const textTertiary = theme === 'light' ? '#000' : '#fff';
 
+	const textHighEmphasis = theme === 'light' ? '#000' : '#e1e1e1';
+	const textMediumEmphasis = theme === 'light' ? '#3f3f3f' : '#b2b2b2';*/
+
+	const colorPrimary = theme === 'light' ? '#0073e6' : '#121212';
+	const colorSecondary = theme === 'light' ? '#e6f3ff' : '#121212';
+	const colorTertiary = theme === 'light' ? '#cde7ff' : '#1e1e1e';
+	const colorAccent = '#ff7d2d';
+	const colorNeutral = theme === 'light' ? '#fff' : '#1e1e1e';
+
+	const textHighEmphasis = theme === 'light' ? '#000' : '#e1e1e1';
+	const textMediumEmphasis = theme === 'light' ? '#3f3f3f' : '#b2b2b2';
+	const textLowEmphasis = theme === 'light' ? '#b2b2b2' : '#3f3f3f';
+	const textAccent = '#ff7d2d';
+
 	return {
-		bgPrimary,
-		bgSecondary,
-		bgTertiary,
-		textPrimary,
-		textSecondary,
-		textTertiary,
-		background: {
-			backgroundColor: bgTertiary
-		},
-		text: {
-			color: textTertiary
-		},
+		colorPrimary,
+		colorSecondary,
+		colorAccent,
+		colorNeutral,
+		textHighEmphasis,
+		textMediumEmphasis,
+		textLowEmphasis,
+		textAccent,
 		body: {
-			color: textPrimary,
-			backgroundColor: bgSecondary,
+			color: textHighEmphasis,
+			backgroundColor: colorSecondary,
 			height: '100%'
 		},
 		header: {
-			color: textPrimary,
-			backgroundColor: bgPrimary
-		},
-		headerTitle: {
-			alignSelf: 'center'
+			backgroundColor: colorPrimary,
+			color: textHighEmphasis,
+			title: {
+				alignSelf: 'center'
+			}
 		},
 		modal: {
-			backgroundColor: bgSecondary,
+			backgroundColor: colorSecondary,
 			height: '95%',
 			width: '100%',
 			alignItems: 'center',
@@ -107,37 +113,57 @@ export function getStyles(theme: 'light' | 'dark') {
 			borderTopStartRadius: 10,
 			borderTopEndRadius: 10
 		},
-		searchContainer: {
-			width: '100%',
-			padding: 10,
-			flexDirection: 'row'
+		search: {
+			container: {
+				width: '100%',
+				padding: 10,
+				flexDirection: 'row'
+			},
+			input: {
+				backgroundColor: colorTertiary,
+				color: textHighEmphasis,
+				padding: 5,
+				borderRadius: 10,
+				flex: 1,
+				marginRight: 10
+			},
+			button: {
+				color: colorAccent,
+				backgroundColor: colorNeutral
+			}
 		},
-		searchInput: {
-			backgroundColor: '#b5dbff',
-			padding: 5,
-			borderRadius: 10,
-			flex: 1,
-			marginRight: 10
+		card: {
+			backgroundColor: colorNeutral,
+			content: {
+				flexDirection: 'row',
+				alignContent: 'center',
+				info: {
+					flex: 1
+				},
+				time: {
+					alignSelf: 'center',
+					color: textHighEmphasis
+				}
+			}
 		},
-		scrollContainer: {
+		settings: {
+			height: '100%',
+			backgroundColor: theme === 'light' ? colorNeutral : colorSecondary,
+			title: {
+				color: textHighEmphasis,
+				fontSize: 30,
+				fontWeight: 'bold',
+				padding: 10
+			},
+			radio: {
+				activeColor: theme === 'light' ? colorPrimary : colorAccent,
+				inactiveColor: theme === 'light' ? colorPrimary : colorAccent,
+				textColor: textHighEmphasis,
+				circleSize: 20
+			}
+		},
+		scroll: {
 			width: '100%'
-		},
-		clockContainer: {
-			flexDirection: 'row',
-			alignContent: 'center'
-		},
-		clockInfo: {
-			flex: 1
-		},
-		clockTime: {
-			alignSelf: 'center',
-			color: textTertiary
-		},
-		title: {
-			color: textTertiary,
-			fontSize: 30,
-			fontWeight: 'bold',
-			padding: 10
 		}
 	};
 }

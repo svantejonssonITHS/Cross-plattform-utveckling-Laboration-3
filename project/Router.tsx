@@ -6,10 +6,11 @@ import { useState, useEffect } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert, BackHandler } from 'react-native';
+import { useSelector } from 'react-redux';
 
 // Internal dependencies
 import { Settings, WorldClocks } from './screens/';
-import { getTimezones } from './misc';
+import { getTimezones, getStyles } from './misc';
 import { TimeContext } from './contexts/';
 import { ITimezone } from './interfaces/';
 import { store, setTheme } from './Store';
@@ -20,38 +21,44 @@ export default function Router() {
 	const [isReady, setIsReady] = useState(false);
 	const [allTimezones, setAllTimezones] = useState<string[]>([]);
 	const [savedTimezones, setSavedTimezones] = useState<ITimezone[]>([]);
+	const [theme] = useSelector((state: any) => [state.theme]);
+	const [styles, setStyles] = useState(getStyles(store.getState().theme) as any);
 
 	useEffect(() => {
+		setStyles(getStyles(theme));
+
 		(async () => {
-			try {
-				// Splash screen is shown until all async tasks are done.
-				SplashScreen.preventAutoHideAsync();
-				setAllTimezones(await getTimezones());
+			if (!isReady) {
+				try {
+					// Splash screen is shown until all async tasks are done.
+					SplashScreen.preventAutoHideAsync();
+					setAllTimezones(await getTimezones());
 
-				// Get selected timezones from async storage.
-				const storedTimezones = await AsyncStorage.getItem('savedTimezones');
+					// Get selected timezones from async storage.
+					const storedTimezones = await AsyncStorage.getItem('savedTimezones');
 
-				if (storedTimezones) setSavedTimezones(JSON.parse(storedTimezones));
+					if (storedTimezones) setSavedTimezones(JSON.parse(storedTimezones));
 
-				// Get saved theme preference from async storage.
-				const storedTheme = await AsyncStorage.getItem('theme');
+					// Get saved theme preference from async storage.
+					const storedTheme = await AsyncStorage.getItem('theme');
 
-				if (storedTheme) store.dispatch(setTheme(storedTheme));
-				else {
-					AsyncStorage.setItem('theme', 'light');
+					if (storedTheme) store.dispatch(setTheme(storedTheme));
+					else {
+						AsyncStorage.setItem('theme', 'light');
+					}
+				} catch (e) {
+					// An error occurred, notify user
+					Alert.alert('Something went wrong', 'Please try again later', [
+						{ text: 'OK', onPress: () => BackHandler.exitApp() }
+					]);
+				} finally {
+					// App is ready to render, hide splash screen
+					setIsReady(true);
+					SplashScreen.hideAsync();
 				}
-			} catch (e) {
-				// An error occurred, notify user
-				Alert.alert('Something went wrong', 'Please try again later', [
-					{ text: 'OK', onPress: () => BackHandler.exitApp() }
-				]);
-			} finally {
-				// App is ready to render, hide splash screen
-				setIsReady(true);
-				SplashScreen.hideAsync();
 			}
 		})();
-	}, []);
+	}, [theme]);
 
 	if (!isReady) return null;
 	return (
@@ -62,9 +69,9 @@ export default function Router() {
 					screenOptions={({ route }) => ({
 						headerShown: false,
 						tabBarStyle: {
-							backgroundColor: '#0073e6'
+							backgroundColor: styles.colorPrimary
 						},
-						tabBarActiveTintColor: '#ff7d2d',
+						tabBarActiveTintColor: styles.colorAccent,
 						tabBarInactiveTintColor: '#fff',
 						tabBarIcon: ({ focused }) => {
 							let name: string;
@@ -82,7 +89,7 @@ export default function Router() {
 									break;
 							}
 
-							if (focused) color = '#ff7d2d';
+							if (focused) color = styles.colorAccent;
 							else color = '#fff';
 
 							return <MaterialIcons name={name as never} size={24} color={color} />;

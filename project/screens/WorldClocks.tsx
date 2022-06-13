@@ -59,7 +59,7 @@ export default function WorldClocks() {
 		<View style={styles.body}>
 			<Appbar.Header style={styles.header}>
 				<Appbar.Action icon="clock-edit-outline" />
-				<Appbar.Content title="World clocks" titleStyle={styles.headerTitle} />
+				<Appbar.Content title="World clocks" titleStyle={styles.header.title} />
 				<Appbar.Action icon="plus" onPress={() => setModalVisible(true)} />
 			</Appbar.Header>
 			<ScrollView style={styles.scrollContainer}>
@@ -77,7 +77,7 @@ export default function WorldClocks() {
 			</ScrollView>
 			<Modal animationType="slide" visible={modalVisible} transparent={true}>
 				<View style={styles.modal}>
-					<View style={styles.searchContainer}>
+					<View style={styles.search.container}>
 						<TextInput
 							onChangeText={setSearch}
 							value={search}
@@ -86,13 +86,13 @@ export default function WorldClocks() {
 							autoCorrect={false}
 							autoComplete={'off'}
 							returnKeyType={'search'}
-							style={styles.searchInput}
+							style={styles.search.input}
 							inputAccessoryViewID="search"
 						/>
 						<Button
 							title="Cancel"
 							accessibilityLabel="Go back"
-							color="#ff7d2d"
+							color={styles.search.button.color}
 							onPress={() => {
 								setSearch('');
 								setModalVisible(false);
@@ -100,14 +100,14 @@ export default function WorldClocks() {
 						/>
 						{Platform.OS === 'ios' && (
 							<InputAccessoryView nativeID="search">
-								<View style={styles.background}>
+								<View style={styles.search.button}>
 									<Button onPress={() => setSearch('')} title="Clear search" />
 								</View>
 							</InputAccessoryView>
 						)}
 					</View>
 					<FlatList
-						style={styles.scrollContainer}
+						style={styles.scroll}
 						data={allTimezones.map((timezone: string) => timezone.replace(/_/g, ' '))}
 						renderItem={({ item }) => (
 							<View key={item}>
