@@ -14,20 +14,23 @@ import {
 import { useContext, useState, useEffect } from 'react';
 import { Appbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
 
 // Internal dependencies
-import { ThemeContext, TimeContext } from '../contexts/';
+import { TimeContext } from '../contexts/';
 import { getDetailedTimezone, getTime, stringMatch, getStyles } from '../misc';
 import { IClock, ITimezone } from '../interfaces/';
 import WorldClock from '../components/WorldClock';
+
+import { store } from '../Store';
 
 export default function WorldClocks() {
 	const { allTimezones, savedTimezones } = useContext(TimeContext);
 	const [clocks, setClocks] = useState<IClock[]>([]);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [search, setSearch] = useState('');
-	const [theme] = useState(useContext(ThemeContext).theme);
-	const [styles, setStyles] = useState(getStyles(useContext(ThemeContext).theme));
+	const [theme] = useSelector((state: any) => [state.theme]);
+	const [styles, setStyles] = useState(getStyles(store.getState().theme) as any);
 
 	useEffect(() => {
 		setStyles(getStyles(theme));

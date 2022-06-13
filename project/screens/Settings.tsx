@@ -1,17 +1,18 @@
 // External dependencies
 import { View, Text } from 'react-native';
-import { useContext, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Appbar } from 'react-native-paper';
 import RadioButtonRN from 'radio-buttons-react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
 
 // Internal dependencies
-import { ThemeContext } from '../contexts/';
 import { getStyles } from '../misc';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { store, setTheme } from '../Store';
 
 export default function Settings() {
-	const [theme, setTheme] = useState(useContext(ThemeContext).theme);
-	const [styles, setStyles] = useState(getStyles(useContext(ThemeContext).theme) as any);
+	const [styles, setStyles] = useState(getStyles(store.getState().theme) as any);
+	const [theme] = useSelector((state: any) => [state.theme]);
 
 	const options = [
 		{
@@ -44,7 +45,7 @@ export default function Settings() {
 					textColor={styles.textTertiary}
 					data={options}
 					initial={options.findIndex((option) => option.value === theme) + 1}
-					selectedBtn={(selected) => setTheme(selected.value as 'light' | 'dark')}
+					selectedBtn={(selected) => store.dispatch(setTheme(selected.value))}
 				/>
 			</View>
 		</View>

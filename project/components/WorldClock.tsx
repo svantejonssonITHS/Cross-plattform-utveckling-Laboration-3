@@ -2,15 +2,16 @@
 import { View } from 'react-native';
 import { useState, useEffect, useContext } from 'react';
 import { Card, Title, Paragraph } from 'react-native-paper';
+import { useSelector } from 'react-redux';
 
 // Internal dependencies
 import { getTime, getStyles } from '../misc';
-import { ThemeContext } from '../contexts';
+import { store } from '../Store';
 
 export default function WorldClock(props: { startTime: string; timezone: string; offset: number; city: string }) {
 	const [time, setTime] = useState(props.startTime);
-	const [theme] = useState(useContext(ThemeContext).theme);
-	const [styles, setStyles] = useState(getStyles(useContext(ThemeContext).theme));
+	const [theme] = useSelector((state: any) => [state.theme]);
+	const [styles, setStyles] = useState(getStyles(store.getState().theme) as any);
 
 	useEffect(() => {
 		setStyles(getStyles(theme));
