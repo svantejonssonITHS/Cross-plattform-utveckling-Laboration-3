@@ -73,8 +73,21 @@ export default function WorldClocks() {
 							timezone={clock.timezone}
 							offset={clock.offset}
 							city={clock.city}
-							onDelete={(city) => {
+							onDelete={async (city) => {
 								// TODO: Remove clock from array 'clocks' and from AsyncStorage
+								const newClocks = clocks.filter((clock) => clock.city !== city);
+								setClocks(newClocks);
+								let storedTimezones = await AsyncStorage.getItem('savedTimezones');
+
+								if (storedTimezones) {
+									storedTimezones = JSON.parse(storedTimezones) as never;
+									storedTimezones = (storedTimezones as any).filter(
+										(timezone: ITimezone) => timezone.city !== city
+									);
+									await AsyncStorage.setItem('savedTimezones', JSON.stringify(storedTimezones));
+								}
+
+								setShowDelete(false);
 							}}
 							showDelete={showDelete}
 						/>
