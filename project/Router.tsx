@@ -9,7 +9,7 @@ import { Alert, BackHandler, Appearance } from 'react-native';
 import { useSelector } from 'react-redux';
 
 // Internal dependencies
-import { Settings, WorldClocks } from './screens/';
+import { Settings, Stopwatch, WorldClocks } from './screens/';
 import { getTimezones, getStyles } from './misc';
 import { TimeContext } from './contexts/';
 import { ITimezone } from './interfaces/';
@@ -69,7 +69,8 @@ export default function Router() {
 					screenOptions={({ route }) => ({
 						headerShown: false,
 						tabBarStyle: {
-							backgroundColor: styles.colorPrimary
+							backgroundColor: styles.colorPrimary,
+							borderTopWidth: 0
 						},
 						tabBarActiveTintColor: styles.colorAccent,
 						tabBarInactiveTintColor: '#fff',
@@ -80,6 +81,9 @@ export default function Router() {
 							switch (route.name) {
 								case 'World clocks':
 									name = 'language';
+									break;
+								case 'Stopwatch':
+									name = 'timer';
 									break;
 								case 'Settings':
 									name = 'settings';
@@ -97,6 +101,7 @@ export default function Router() {
 					})}
 				>
 					<Tab.Screen name="World clocks" component={WorldClocks} />
+					<Tab.Screen name="Stopwatch" component={Stopwatch} />
 					<Tab.Screen name="Settings" component={Settings} />
 				</Tab.Navigator>
 			</NavigationContainer>
