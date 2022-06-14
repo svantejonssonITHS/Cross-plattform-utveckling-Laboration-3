@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Alert, BackHandler } from 'react-native';
+import { Alert, BackHandler, Appearance } from 'react-native';
 import { useSelector } from 'react-redux';
 
 // Internal dependencies
@@ -44,7 +44,7 @@ export default function Router() {
 
 					if (storedTheme) store.dispatch(setTheme(storedTheme));
 					else {
-						AsyncStorage.setItem('theme', 'light');
+						store.dispatch(setTheme(Appearance.getColorScheme()));
 					}
 				} catch (e) {
 					// An error occurred, notify user
