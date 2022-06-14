@@ -69,7 +69,6 @@ export function getStyles(theme: 'light' | 'dark') {
 	const textHighEmphasis = theme === 'light' ? '#000' : '#e1e1e1';
 	const textMediumEmphasis = theme === 'light' ? '#3f3f3f' : '#b2b2b2';
 	const textLowEmphasis = theme === 'light' ? '#b2b2b2' : '#3f3f3f';
-	const textAccent = '#ff7d2d';
 
 	return {
 		colorPrimary,
@@ -79,7 +78,6 @@ export function getStyles(theme: 'light' | 'dark') {
 		textHighEmphasis,
 		textMediumEmphasis,
 		textLowEmphasis,
-		textAccent,
 		body: {
 			color: textHighEmphasis,
 			backgroundColor: colorSecondary,
