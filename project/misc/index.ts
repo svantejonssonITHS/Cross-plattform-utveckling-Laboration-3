@@ -124,6 +124,12 @@ export function getStyles(theme: 'light' | 'dark') {
 			content: {
 				flexDirection: 'row',
 				alignContent: 'center',
+				action: {
+					alignItems: 'center',
+					button: {
+						color: '#f00'
+					}
+				},
 				info: {
 					flex: 1
 				},

@@ -31,6 +31,7 @@ export default function WorldClocks() {
 	const [search, setSearch] = useState('');
 	const [theme] = useSelector((state: any) => [state.theme]);
 	const [styles, setStyles] = useState(getStyles(store.getState().theme) as any);
+	const [showDelete, setShowDelete] = useState(false);
 
 	useEffect(() => {
 		setStyles(getStyles(theme));
@@ -58,7 +59,7 @@ export default function WorldClocks() {
 	return (
 		<View style={styles.body}>
 			<Appbar.Header style={styles.header}>
-				<Appbar.Action icon="clock-edit-outline" />
+				<Appbar.Action icon="clock-edit-outline" onPress={() => setShowDelete(!showDelete)} />
 				<Appbar.Content title="World clocks" titleStyle={styles.header.title} />
 				<Appbar.Action icon="plus" onPress={() => setModalVisible(true)} />
 			</Appbar.Header>
@@ -72,6 +73,10 @@ export default function WorldClocks() {
 							timezone={clock.timezone}
 							offset={clock.offset}
 							city={clock.city}
+							onDelete={(city) => {
+								// TODO: Remove clock from array 'clocks' and from AsyncStorage
+							}}
+							showDelete={showDelete}
 						/>
 					))}
 			</ScrollView>
