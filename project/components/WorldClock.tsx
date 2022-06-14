@@ -13,7 +13,7 @@ export default function WorldClock(props: {
 	timezone: string;
 	offset: number;
 	city: string;
-	onDelete(): void;
+	onDelete(city: string): void;
 	showDelete: boolean;
 }) {
 	const [time, setTime] = useState(props.startTime);
