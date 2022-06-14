@@ -31,7 +31,7 @@ export async function getDetailedTimezone(timezone: string) {
 }
 
 export function getTime(offset: number) {
-	if (!offset) return '00:00';
+	if (!offset && isNaN(offset)) return '00:00';
 
 	// Clock offset to Greenwich Mean Time in hours
 	const gmtOffset = 3600000 * offset;
