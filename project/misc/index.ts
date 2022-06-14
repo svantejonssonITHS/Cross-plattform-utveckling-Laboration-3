@@ -61,7 +61,7 @@ export function stringMatch(string: string, otherString: string) {
 
 export function getStyles(theme: 'light' | 'dark') {
 	const colorPrimary = theme === 'light' ? '#0073e6' : '#121212';
-	const colorSecondary = theme === 'light' ? '#e6f3ff' : '#121212';
+	const colorSecondary = theme === 'light' ? '#e6f3ff' : '#090909';
 	const colorTertiary = theme === 'light' ? '#cde7ff' : '#1e1e1e';
 	const colorAccent = '#ff7d2d';
 	const colorNeutral = theme === 'light' ? '#fff' : '#1e1e1e';
