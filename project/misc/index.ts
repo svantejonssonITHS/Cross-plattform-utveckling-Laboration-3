@@ -60,17 +60,6 @@ export function stringMatch(string: string, otherString: string) {
 }
 
 export function getStyles(theme: 'light' | 'dark') {
-	/*
-	const bgPrimary = theme === 'light' ? '#0073e6' : '#121212';
-	const bgSecondary = theme === 'light' ? '#e6f3ff' : '#121212';
-	const bgTertiary = theme === 'light' ? '#fff' : '#1e1e1e';
-	const textPrimary = theme === 'light' ? '#fff' : '#000';
-	const textSecondary = theme === 'light' ? '#ff7d2d' : '#fff';
-	const textTertiary = theme === 'light' ? '#000' : '#fff';
-
-	const textHighEmphasis = theme === 'light' ? '#000' : '#e1e1e1';
-	const textMediumEmphasis = theme === 'light' ? '#3f3f3f' : '#b2b2b2';*/
-
 	const colorPrimary = theme === 'light' ? '#0073e6' : '#121212';
 	const colorSecondary = theme === 'light' ? '#e6f3ff' : '#121212';
 	const colorTertiary = theme === 'light' ? '#cde7ff' : '#1e1e1e';
