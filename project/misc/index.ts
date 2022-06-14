@@ -59,6 +59,14 @@ export function stringMatch(string: string, otherString: string) {
 	return string.toLowerCase().replace(/_/g, ' ').includes(otherString.toLowerCase().replace(/_/g, ' '));
 }
 
+export function formatStopwatch(ms: number) {
+	const milliseconds = ('0' + Math.floor(ms)).slice(-2);
+	const seconds = ('0' + (Math.floor(ms / 1000) % 60)).slice(-2);
+	const minutes = ('0' + (Math.floor(ms / 60000) % 60)).slice(-2);
+
+	return [minutes, seconds, milliseconds].join(':');
+}
+
 export function getStyles(theme: 'light' | 'dark') {
 	const colorPrimary = theme === 'light' ? '#0073e6' : '#121212';
 	const colorSecondary = theme === 'light' ? '#e6f3ff' : '#090909';
