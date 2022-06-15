@@ -22,13 +22,15 @@ export default function WorldClock(props: {
 
 	useEffect(() => {
 		setStyles(getStyles(theme));
+	}, [theme]);
 
+	useEffect(() => {
 		// set interval to update time
 		const updateInterval = setInterval(() => setTime(getTime(props.offset) as string), 1000);
 
 		// clear interval on unmount
 		return () => clearInterval(updateInterval);
-	}, [time, theme]);
+	}, [time]);
 
 	return (
 		<Card style={styles.card}>

@@ -191,27 +191,29 @@ export function getStyles(theme: 'light' | 'dark') {
 				}
 			},
 			startColor: {
-				backgroundColor: '#172e1c',
-				color: '#53d761'
+				backgroundColor: theme === 'light' ? '#259d3f' : '#172e1c',
+				color: theme === 'light' ? '#fff' : '#53d761'
 			},
 			stopColor: {
-				backgroundColor: '#330d0c',
-				color: '#f04b3e'
+				backgroundColor: theme === 'light' ? '#e01b16' : '#330d0c',
+				color: theme === 'light' ? '#fff' : '#f04b3e'
 			},
 			lapColor: {
-				backgroundColor: '#3e3e3e',
-				color: '#fefefe'
+				backgroundColor: theme === 'light' ? '#a2a2a2' : '#3e3e3e',
+				color: theme === 'light' ? '#fff' : '#fefefe'
 			},
 			resetColor: {
-				backgroundColor: '#3e3e3e',
-				color: '#fefefe'
+				backgroundColor: theme === 'light' ? '#a2a2a2' : '#3e3e3e',
+				color: theme === 'light' ? '#fff' : '#fefefe'
 			},
 			lapItem: {
-				color: '#fefefe',
 				fontSize: 17,
 				padding: 10,
 				marginLeft: 10
-			}
+			},
+			bestLap: theme === 'light' ? '#27a610' : '#29ce52',
+			worstLap: theme === 'light' ? '#d70d0d' : '#fe4034',
+			lap: theme === 'light' ? '#000' : '#fff'
 		},
 		scroll: {
 			width: '100%'

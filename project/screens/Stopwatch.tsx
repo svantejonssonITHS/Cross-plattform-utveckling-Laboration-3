@@ -116,7 +116,14 @@ export default function Stopwatch() {
 							key={index}
 							style={[
 								styles.stopwatch.lapItem,
-								{ color: bestLap === index ? '#29ce52' : worstLap === index ? '#fe4034' : '#fff' }
+								{
+									color:
+										bestLap === index
+											? styles.stopwatch.bestLap
+											: worstLap === index
+											? styles.stopwatch.worstLap
+											: styles.stopwatch.lap
+								}
 							]}
 						>
 							{`Lap ${index + 1}: ${formatStopwatch(lap)}`}

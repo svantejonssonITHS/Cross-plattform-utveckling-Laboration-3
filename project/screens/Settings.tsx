@@ -32,6 +32,10 @@ export default function Settings() {
 	];
 
 	useEffect(() => {
+		setStyles(getStyles(theme));
+	}, [theme]);
+
+	useEffect(() => {
 		(async () => {
 			setStoredTheme((await AsyncStorage.getItem('theme')) || null);
 			if (!initialValue) {
@@ -41,9 +45,7 @@ export default function Settings() {
 				});
 			}
 		})();
-
-		setStyles(getStyles(theme));
-	}, [theme, storedTheme]);
+	}, [storedTheme]);
 
 	return (
 		<View style={styles.body}>

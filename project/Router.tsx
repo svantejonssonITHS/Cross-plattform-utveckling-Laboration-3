@@ -26,7 +26,9 @@ export default function Router() {
 
 	useEffect(() => {
 		setStyles(getStyles(theme));
+	}, [theme]);
 
+	useEffect(() => {
 		(async () => {
 			if (!isReady) {
 				try {
@@ -58,7 +60,7 @@ export default function Router() {
 				}
 			}
 		})();
-	}, [theme]);
+	}, []);
 
 	if (!isReady) return null;
 	return (

@@ -35,6 +35,9 @@ export default function WorldClocks() {
 
 	useEffect(() => {
 		setStyles(getStyles(theme));
+	}, [theme]);
+
+	useEffect(() => {
 		(async () => {
 			try {
 				setClocks(
@@ -55,7 +58,7 @@ export default function WorldClocks() {
 				]);
 			}
 		})();
-	}, [savedTimezones, theme]);
+	}, [savedTimezones]);
 
 	return (
 		<View style={styles.body}>
