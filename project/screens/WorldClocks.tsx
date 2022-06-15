@@ -43,7 +43,8 @@ export default function WorldClocks() {
 							time: getTime(timezone.offset) as string,
 							timezone: timezone.offset_str,
 							offset: timezone.offset,
-							city: timezone.city
+							city: timezone.city,
+							timezone_api: timezone.name_api
 						} as IClock;
 					})
 				);
@@ -126,7 +127,9 @@ export default function WorldClocks() {
 					</View>
 					<FlatList
 						style={styles.scroll}
-						data={allTimezones.map((timezone: string) => timezone.replace(/_/g, ' '))}
+						data={allTimezones
+							.map((timezone: string) => timezone.replace(/_/g, ' '))
+							.filter((timezone) => !clocks.some((tz) => tz.timezone_api === timezone))}
 						renderItem={({ item }) => (
 							<View key={item}>
 								{stringMatch(item, search) && (
@@ -143,7 +146,8 @@ export default function WorldClocks() {
 												time: getTime(timezone.offset) as string,
 												timezone: timezone.offset_str,
 												offset: timezone.offset,
-												city: timezone.city
+												city: timezone.city,
+												timezone_api: timezone.name_api
 											};
 
 											// Add clock to state

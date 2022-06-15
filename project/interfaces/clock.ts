@@ -3,4 +3,5 @@ export default interface IClock {
 	timezone: string;
 	offset: number;
 	city: string;
+	timezone_api: string;
 }
