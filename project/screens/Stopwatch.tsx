@@ -77,6 +77,13 @@ export default function Stopwatch() {
 
 	useEffect(() => {
 		setStyles(getStyles(theme));
+
+		if (stopwatchInterval) {
+			return () => {
+				clearInterval(stopwatchInterval);
+				setStopwatchInterval(null);
+			};
+		}
 	}, [theme]);
 
 	return (
