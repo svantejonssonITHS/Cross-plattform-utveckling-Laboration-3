@@ -163,6 +163,56 @@ export function getStyles(theme: 'light' | 'dark') {
 				circleSize: 20
 			}
 		},
+		stopwatch: {
+			justifyContent: 'center',
+			alignItems: 'center',
+			marginTop: 100,
+			marginBottom: 25,
+			time: {
+				color: textHighEmphasis,
+				fontSize: 60,
+				fontVariant: ['tabular-nums']
+			},
+			buttonContainer: {
+				width: '100%',
+				marginTop: 50,
+				flexDirection: 'row',
+				justifyContent: 'space-around',
+				alignItems: 'center'
+			},
+			button: {
+				width: 75,
+				height: 75,
+				borderRadius: 75,
+				justifyContent: 'center',
+				alignItems: 'center',
+				text: {
+					fontSize: 20
+				}
+			},
+			startColor: {
+				backgroundColor: '#172e1c',
+				color: '#53d761'
+			},
+			stopColor: {
+				backgroundColor: '#330d0c',
+				color: '#f04b3e'
+			},
+			lapColor: {
+				backgroundColor: '#3e3e3e',
+				color: '#fefefe'
+			},
+			resetColor: {
+				backgroundColor: '#3e3e3e',
+				color: '#fefefe'
+			},
+			lapItem: {
+				color: '#fefefe',
+				fontSize: 17,
+				padding: 10,
+				marginLeft: 10
+			}
+		},
 		scroll: {
 			width: '100%'
 		}
