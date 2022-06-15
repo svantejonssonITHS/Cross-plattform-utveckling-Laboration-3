@@ -13,7 +13,7 @@ export async function getTimezones() {
 }
 
 export async function getDetailedTimezone(timezone: string) {
-	const request = await fetch(`http://worldtimeapi.org/api/timezone/${timezone}`);
+	const request = await fetch(`http://worldtimeapi.org/api/timezone/${timezone.replace(/ /g, '_')}`);
 	const detailedTimezone = await request.json();
 
 	// Create an object with the timezone interface
