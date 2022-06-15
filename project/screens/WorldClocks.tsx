@@ -114,6 +114,7 @@ export default function WorldClocks() {
 							color={styles.search.button.color}
 							onPress={() => {
 								setSearch('');
+								setShowDelete(false);
 								setModalVisible(false);
 							}}
 						/>
@@ -135,7 +136,7 @@ export default function WorldClocks() {
 								{stringMatch(item, search) && (
 									<Button
 										title={item}
-										accessibilityLabel="Go back"
+										accessibilityLabel="Add world clock"
 										color="#ff7d2d"
 										onPress={async () => {
 											// Get detailed timezone info
@@ -165,8 +166,9 @@ export default function WorldClocks() {
 											}
 
 											// Close modal and clear search
-											setModalVisible(false);
 											setSearch('');
+											setShowDelete(false);
+											setModalVisible(false);
 										}}
 									/>
 								)}
