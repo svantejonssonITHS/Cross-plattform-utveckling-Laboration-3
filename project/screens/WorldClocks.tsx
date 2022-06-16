@@ -78,7 +78,6 @@ export default function WorldClocks() {
 							offset={clock.offset}
 							city={clock.city}
 							onDelete={async (city) => {
-								// TODO: Remove clock from array 'clocks' and from AsyncStorage
 								const newClocks = clocks.filter((clock) => clock.city !== city);
 								setClocks(newClocks);
 								let storedTimezones = await AsyncStorage.getItem('savedTimezones');
