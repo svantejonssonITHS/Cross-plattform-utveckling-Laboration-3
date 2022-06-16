@@ -72,7 +72,7 @@ export default function WorldClocks() {
 					clocks.length > 0 &&
 					clocks.map((clock: IClock, index: number) => (
 						<WorldClock
-							key={index}
+							key={index + clock.city}
 							startTime={clock.time}
 							timezone={clock.timezone}
 							offset={clock.offset}
@@ -132,7 +132,9 @@ export default function WorldClocks() {
 						style={styles.scroll}
 						data={allTimezones
 							.map((timezone: string) => timezone.replace(/_/g, ' '))
-							.filter((timezone) => !clocks.some((tz) => tz.timezone_api === timezone))}
+							.filter(
+								(timezone) => !clocks.some((tz) => tz.timezone_api.replace(/_/g, ' ') === timezone)
+							)}
 						renderItem={({ item }) => (
 							<View key={item}>
 								{stringMatch(item, search) && (
