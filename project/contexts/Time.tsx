@@ -4,7 +4,7 @@ import React from 'react';
 // Internal dependencies
 import { ITimezone } from '../interfaces';
 
-export default React.createContext({
+export const TimeContext = React.createContext({
 	allTimezones: [] as string[],
 	savedTimezones: [] as ITimezone[]
 });
