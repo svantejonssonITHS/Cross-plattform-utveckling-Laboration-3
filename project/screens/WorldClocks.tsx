@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector } from 'react-redux';
 
 // Internal dependencies
-import { TimeContext } from '../contexts/';
+import { TimeContext } from '../contexts/Time';
 import { getDetailedTimezone, getTime, stringMatch, getStyles } from '../misc';
 import { IClock, ITimezone } from '../interfaces/';
 import WorldClock from '../components/WorldClock';

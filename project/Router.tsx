@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 // Internal dependencies
 import { Settings, Stopwatch, WorldClocks } from './screens/';
 import { getTimezones, getStyles } from './misc';
-import { TimeContext } from './contexts/';
+import { TimeContext } from './contexts/Time';
 import { ITimezone } from './interfaces/';
 import { store, setTheme } from './Store';
 
